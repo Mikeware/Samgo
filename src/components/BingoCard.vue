@@ -44,10 +44,15 @@ const phrases: string[] = [
   'HAS PLAYERS WAGER',
 ]
 
+function getRandomElementFromArray(array: string[]): string {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array.splice(randomIndex, 1)[0];
+}
+
 const board = ref(
   Array.from({ length: 5 }, () => 
     Array.from({ length: 5 }, () => ({
-      phrase: phrases[Math.floor(Math.random() * phrases.length)],
+      phrase: getRandomElementFromArray(phrases),
       state: SquareState.UNSTAMPED
     }))
   )

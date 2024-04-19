@@ -69,9 +69,15 @@ board.value[2][2] = {
         <div><span>O</span></div>
     </div>
     <!-- Bingo Tile -->
-    <div v-for="(row, index) in board" class="row">
-      <div v-for="(square, index) in row">
-        <Square :phrase="square.phrase" :state="square.state"/>
+    <div v-for="(row, rowindex) in board" class="row">
+      <div v-for="(square, index) in row"
+           :class="[
+              index == 0 && rowindex == 0 && 'topleft',
+              index == 4 && rowindex == 0 && 'topright',
+              index == 0 && rowindex == 4 && 'bottomleft',
+              index == 4 && rowindex == 4 && 'bottomright',
+           ]">
+        <Square :phrase="square.phrase" :state="square.state" :is-last-row="rowindex == 4" :is-last-col="index == 4"/>
       </div>
     </div>
   </div>
@@ -103,6 +109,26 @@ board.value[2][2] = {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding: 0 12px;
+}
+
+.topleft {
+  border-radius: 24px 0 0 0;
+  overflow: hidden;
+}
+
+.topright {
+  border-radius: 0 24px 0 0;
+  overflow: hidden;
+}
+
+.bottomleft {
+  border-radius: 0 0 0 24px;
+  overflow: hidden;
+}
+
+.bottomright {
+  border-radius: 0 0 24px 0;
+  overflow: hidden;
 }
 
 .letters {

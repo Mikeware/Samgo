@@ -30,7 +30,9 @@ onMounted(() => {
 
 <style scoped>
 #gclogo {
-  height: 62vh;
+  object-fit: contain;
+  max-height: 62vh; /* We really want this to be height: 62vh, but with portrait orientation it gets weird anyway, and we're going to prefer to opt for maintaining aspect ratio w/ contain above */
+  max-width: 80vw;
   position: absolute;
   left: 50%;
   top: -10%;

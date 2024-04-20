@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <title>Samgo</title>
+    <style>
+      /*.bands {
+        display: grid;
+        grid-template-rows: repeat(5, 1fr);
+        box-sizing: border-box;
+      }*/
+
+      body {
+        background-color: black;
+        color: white;
+      }
+
+      [v-cloak] > * { display: none; }
+
+      [v-cloak]::before { 
+        content: 'Loading...';
+        position: absolute;
+        white-space: pre;
+        display: inline;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -10px);
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app" v-cloak></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -29,6 +29,10 @@ onMounted(() => {
 </template>
 
 <style scoped>
+div {
+  --out-time: 3.75s;
+}
+
 #gclogo {
   object-fit: contain;
   max-height: 62vh; /* We really want this to be height: 62vh, but with portrait orientation it gets weird anyway, and we're going to prefer to opt for maintaining aspect ratio w/ contain above */
@@ -40,10 +44,10 @@ onMounted(() => {
   transform: scale(0.1) translate(-50%, 0%);
   
   animation-name: logoFlyIn, logoFlyOut;
-  animation-duration: 3s, 400ms;
+  animation-duration: 2.5s, 400ms;
   animation-fill-mode: forwards, forwards;
   animation-timing-function: ease-in-out, linear;
-  animation-delay: 1.4s, 5.35s;
+  animation-delay: 1.25s, calc(var(--out-time) + 0.3s);
   transform-origin: left top;
 }
 
@@ -118,26 +122,26 @@ onMounted(() => {
 
 .first {
   background-color: #b52327;
-  animation-delay: 650ms, 5550ms;
+  animation-delay: 650ms, calc(var(--out-time) + 550ms);
 }
 
 .second {
   background-color: #ef6638;
-  animation-delay: 300ms, 5400ms;
+  animation-delay: 300ms, calc(var(--out-time) + 400ms);
 }
 
 .third {
   background-color: #fdbe4f;
-  animation-delay: 350ms, 5650ms;
+  animation-delay: 350ms, calc(var(--out-time) + 650ms);
 }
 
 .fourth {
   background-color: #2088a7;
-  animation-delay: 525ms, 5500ms;
+  animation-delay: 525ms, calc(var(--out-time) + 500ms);
 }
 
 .fifth {
   background-color: #711931;
-  animation-delay: 500ms, 5600ms;;
+  animation-delay: 500ms, calc(var(--out-time) + 600ms);
 }
 </style>

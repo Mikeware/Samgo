@@ -14,7 +14,7 @@ function startGame() {
 
   setTimeout(() => {
     loadState.value = 'game';
-  }, 6250);
+  }, 5000);
 }
 </script>
 

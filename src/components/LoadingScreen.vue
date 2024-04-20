@@ -13,17 +13,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bands">
-    <div class="bar first"></div>
-    <div class="bar second"></div>
-    <div class="bar third"></div>
-    <div class="bar fourth"></div>
-    <div class="bar fifth"></div>
-    <audio ref="introAudio">
-      <source src="@/assets/gcintro.mp3" type="audio/mpeg">
-    </audio>
+  <div>
+    <div class="bands">
+      <div class="bar first"></div>
+      <div class="bar second"></div>
+      <div class="bar third"></div>
+      <div class="bar fourth"></div>
+      <div class="bar fifth"></div>
+      <audio ref="introAudio">
+        <source src="@/assets/gcintro.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <img id="gclogo" src="@/assets/gclogo.png"></img>
   </div>
-  <img id="gclogo" src="@/assets/gclogo.png"></img>
 </template>
 
 <style scoped>

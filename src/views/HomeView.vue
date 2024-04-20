@@ -1,20 +1,30 @@
 <script setup lang="ts">
 import BingoCard from '@/components/BingoCard.vue'
 import LoadingScreen from '@/components/LoadingScreen.vue';
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
+const isStarting = ref(false);
 const isLoading = ref(true);
+const isBingo = ref(false);
 
-onMounted(() => {
+function startGame() {
+  isStarting.value = true;
+
   setTimeout(() => {
-    ///isLoading.value = false;
+    // Load bingo behind animation a bit earlier, before animation ends.
+    isBingo.value = true;
   }, 2000);
-})
+
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 4500);
+}
 </script>
 
 <template>
   <main>
-    <LoadingScreen v-if="isLoading" />
-    <BingoCard v-if="!isLoading" />
+    <button class="center" @click="startGame" v-if="!isStarting">Play Game</button>
+    <LoadingScreen v-if="isLoading && isStarting"/>
+    <BingoCard v-if="isBingo" />
   </main>
 </template>

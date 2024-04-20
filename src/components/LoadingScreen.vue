@@ -39,11 +39,11 @@ onMounted(() => {
 
   transform: scale(0.1) translate(-50%, 0%);
   
-  animation-name: logoFlyIn;
-  animation-duration: 3s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-in-out;
-  animation-delay: 1.4s;
+  animation-name: logoFlyIn, logoFlyOut;
+  animation-duration: 3s, 400ms;
+  animation-fill-mode: forwards, forwards;
+  animation-timing-function: ease-in-out, linear;
+  animation-delay: 1.4s, 5.35s;
   transform-origin: left top;
 }
 
@@ -58,6 +58,17 @@ onMounted(() => {
   }
 }
 
+@keyframes logoFlyOut {
+  0% {
+    top: 50%;
+    left: 50%
+  }
+  100% {
+    top: 50%;
+    left: -50%
+  }
+}
+
 .bands {
   display: flex;
   flex-direction: column;
@@ -68,10 +79,10 @@ onMounted(() => {
 .bar {
   flex: 1;
 
-  animation-name: slideIn;
-  animation-duration: 1.75s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+  animation-name: slideIn, slideOut;
+  animation-duration: 1.75s, 450ms;
+  animation-fill-mode: forwards, forwards;
+  animation-timing-function: ease-out, linear;
 
   transform: scaleX(0);
   transform-origin: right top;
@@ -92,28 +103,41 @@ onMounted(() => {
   }
 }
 
+@keyframes slideOut {
+  0% {
+    transform-origin: left top;
+    justify-content: flex-start;
+    transform: scaleX(1);
+  }
+  100% {
+    transform-origin: left top;
+    justify-content: flex-start;
+    transform: scaleX(0);
+  }
+}
+
 .first {
   background-color: #b52327;
-  animation-delay: 650ms;
+  animation-delay: 650ms, 5550ms;
 }
 
 .second {
   background-color: #ef6638;
-  animation-delay: 300ms;
+  animation-delay: 300ms, 5400ms;
 }
 
 .third {
   background-color: #fdbe4f;
-  animation-delay: 350ms;
+  animation-delay: 350ms, 5650ms;
 }
 
 .fourth {
   background-color: #2088a7;
-  animation-delay: 525ms;
+  animation-delay: 525ms, 5500ms;
 }
 
 .fifth {
   background-color: #711931;
-  animation-delay: 500ms;
+  animation-delay: 500ms, 5600ms;;
 }
 </style>

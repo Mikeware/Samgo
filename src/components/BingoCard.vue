@@ -82,7 +82,9 @@ board.value[2][2] = {
               index == 0 && rowindex == 4 && 'bottomleft',
               index == 4 && rowindex == 4 && 'bottomright',
            ]">
-        <Square :phrase="square.phrase" :state="square.state" :is-last-row="rowindex == 4" :is-last-col="index == 4"/>
+        <Square :phrase="square.phrase" :state="square.state" 
+                :is-last-row="rowindex == 4" :is-last-col="index == 4"
+                :is-middle-square="rowindex == 2 && index == 2"/>
       </div>
     </div>
   </div>

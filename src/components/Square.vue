@@ -5,6 +5,7 @@ defineProps<{
   state: SquareState,
   isLastRow: boolean,
   isLastCol: boolean,
+  isMiddleSquare: boolean,
 }>()
 </script>
 
@@ -13,8 +14,9 @@ defineProps<{
       'square',
       isLastRow && 'lastrow',
       isLastCol && 'lastcol',
+      isMiddleSquare && 'invert',
     ]">
-    {{ phrase }}
+    <span>{{ phrase }}</span>
   </div>
 </template>
 
@@ -28,8 +30,25 @@ div {
   src: local("Santana Black"), url(@/assets/fonts/Santana-Black.ttf) format("truetype");
 }
 
+.invert {
+  color: white;
+  font-size: 8px !important;  
+
+  background-image: url('@/assets/star.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  span {
+    max-width: 15ch;
+    word-wrap: normal !important;
+    word-break: keep-all !important;
+  }
+}
+
 .square {
   font-family: "Santana Black", Arial, Helvetica, sans-serif;
+  font-size: 14px;
   white-space: normal;
   overflow-wrap: break-word;
   word-wrap: break-word;

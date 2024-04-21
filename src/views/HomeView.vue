@@ -20,7 +20,9 @@ function startGame() {
 
 <template>
   <main>
-    <button class="center" @click="startGame" v-if="loadState == 'starting'">Play Game</button>
+    <button class="center" @click="startGame" v-if="loadState == 'starting'">
+      <img src="@/assets/PlayGamePodium.png" alt="Play Game">
+    </button>
 
     <BingoCard class="full" v-if="loadState == 'bingo' || loadState == 'game'" />
 
@@ -31,6 +33,15 @@ function startGame() {
 </template>
 
 <style scoped>
+button {
+  background: transparent;
+  border: 3px solid transparent;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
 .full {
   position: absolute;
   top: 0;

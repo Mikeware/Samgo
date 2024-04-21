@@ -21,7 +21,7 @@ function startGame() {
 <template>
   <main>
     <button class="center" @click="startGame" v-if="loadState == 'starting'">
-      <img src="@/assets/PlayGamePodium.png" alt="Play Game">
+      <img src="@/assets/PlayGamePodium.png" alt="Play Game" draggable="false">
     </button>
 
     <BingoCard class="full" v-if="loadState == 'bingo' || loadState == 'game'" />

@@ -34,7 +34,7 @@ onMounted(() => {
         <source src="@/assets/gcintro.mp3" type="audio/mpeg">
       </audio>
     </div>
-    <img id="gclogo" src="@/assets/gclogo.png"></img>
+    <img id="gclogo" src="@/assets/gclogo.png" draggable="false"></img>
   </div>
 </template>
 

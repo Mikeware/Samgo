@@ -89,8 +89,10 @@ div {
   word-wrap: normal;
   word-break: break-word;
   hyphens: manual;
+  -webkit-hyphens: manual;
 
   user-select: none;
+  -webkit-user-select: none;
 
   background-color: white;
   text-align: center;

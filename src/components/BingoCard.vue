@@ -186,7 +186,7 @@ function stampSquare(square: SquareInfo) {
 }
 
 .card {
-  background-color: #f76564;
+  background-color: #711931;
   border-radius: 24px;
 
   overflow: visible;

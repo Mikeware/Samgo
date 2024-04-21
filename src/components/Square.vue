@@ -1,22 +1,56 @@
 <script setup lang="ts">
+import { watch, ref, nextTick } from 'vue'
 import { SquareState } from './models/states'
-defineProps<{
+const props = defineProps<{
   phrase: string,
   state: SquareState,
   isLastRow: boolean,
   isLastCol: boolean,
   isMiddleSquare: boolean,
 }>()
+
+const stamp = ref<HTMLDivElement>();
+
+function randomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+watch(
+    () => props.state,
+    () => {
+        if (props.state == SquareState.STAMPED)
+        {
+            nextTick(() => {
+                stamp.value?.classList.add('rot' + (randomInt(-3, 3) * 5));
+            });
+        }
+        else if (stamp.value != null)
+        {
+            // Remove whatever random rotation class name we added
+            for (let i = stamp.value.classList.length - 1; i >= 0; i--) {
+                const className = stamp.value.classList[i];
+                if (className.startsWith('rot')) {
+                    stamp.value?.classList.remove(className)
+                }
+            }            
+        }
+    }
+)
 </script>
 
 <template>
   <div :class="[
-      'square',
-      isLastRow && 'lastrow',
-      isLastCol && 'lastcol',
-      isMiddleSquare && 'invert',
-    ]">
-    <span>{{ phrase }}</span>
+            'square',
+            isLastRow && 'lastrow',
+            isLastCol && 'lastcol',
+            isMiddleSquare && 'invert'
+        ]">
+    <div>
+      <span>{{ phrase }}</span>
+    </div>
+    <div ref="stamp" class="stamp" v-if="state == SquareState.STAMPED">
+      <img src="@/assets/stamp.png" alt="Stamped" draggable="false">
+    </div>
   </div>
 </template>
 
@@ -55,6 +89,8 @@ div {
   word-break: break-all;
   hyphens: auto;
 
+  user-select: none;
+
   background-color: white;
   text-align: center;
   display: flex;
@@ -65,6 +101,16 @@ div {
 
   width: 100%;
   height: 100%;
+}
+
+.stamp {
+  display: block;
+  position: absolute;
+
+  img {
+    width: auto;
+    height: 18vh;
+  }
 }
 
 .square:not(.lastrow, .lastcol) {
@@ -83,5 +129,29 @@ div {
   border-width: 0 0 var(--border-width) 0;
   border-style: solid;
   border-color: gray;
+}
+
+.rot-15 {
+  transform: rotate(-15deg);
+}
+
+.rot-10 {
+  transform: rotate(-10deg);
+}
+
+.rot-5 {
+  transform: rotate(-5deg);
+}
+
+.rot5 {
+  transform: rotate(5deg);
+}
+
+.rot10 {
+  transform: rotate(10deg);
+}
+
+.rot15 {
+  transform: rotate(15deg);
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SquareState } from './models/states'
+import { SquareState, SquareInfo } from './models/states'
 import Square from './Square.vue'
 /*defineProps<{
   msg: string
@@ -51,16 +51,14 @@ function getRandomElementFromArray(array: string[]): string {
 
 const board = ref(
   Array.from({ length: 5 }, () => 
-    Array.from({ length: 5 }, () => ({
-      phrase: getRandomElementFromArray(phrases),
-      state: SquareState.UNSTAMPED
-    }))
+    Array.from({ length: 5 }, () => new SquareInfo(getRandomElementFromArray(phrases), SquareState.UNSTAMPED))
   )
 )
 
-board.value[2][2] = {
-  phrase: '"I\'VE BEEN HERE THE WHOLE TIME"',
-  state: SquareState.FREE
+board.value[2][2] = new SquareInfo('"I\'VE BEEN HERE THE WHOLE TIME"', SquareState.UNSTAMPED)
+
+function stampSquare(square: SquareInfo) {
+  square.state = square.state == SquareState.STAMPED ? SquareState.UNSTAMPED : SquareState.STAMPED
 }
 </script>
 
@@ -84,7 +82,8 @@ board.value[2][2] = {
            ]">
         <Square :phrase="square.phrase" :state="square.state" 
                 :is-last-row="rowindex == 4" :is-last-col="index == 4"
-                :is-middle-square="rowindex == 2 && index == 2"/>
+                :is-middle-square="rowindex == 2 && index == 2"
+                @click="stampSquare(square)"/>
       </div>
     </div>
   </div>

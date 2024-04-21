@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { SquareState, SquareInfo } from './models/states'
 import Square from './Square.vue'
 
+import ConfettiExplosion from "vue-confetti-explosion";
+
+const won = ref(false);
 const stampSound = ref<HTMLAudioElement>();
+const winningSound = ref<HTMLAudioElement>();
 
 const phrases: string[] = [
   // Phrases
@@ -83,6 +87,58 @@ function stampSquare(square: SquareInfo) {
   {
     stampSound.value?.play();
   }
+
+  // check for bingos
+  let winning = false;
+  let vertical = Array.from({ length: 5}, () => 0);
+  let diagonals = Array.from({ length: 2}, () => 0);
+  for (let row = 0; row < 5; row++) {
+    let horizontal = 0;
+
+    for (let col = 0; col < 5; col++) {
+      if (board.value[row][col].state == SquareState.STAMPED) {
+        vertical[col]++;
+        horizontal++;
+
+        // TL -> BR
+        if (row == col) {
+          diagonals[0]++;
+        }
+        // TR -> BL
+        if (4 - row == col) {
+          diagonals[1]++;
+        }
+      }
+    }
+
+    // Did this row have a bingo?
+    if (horizontal == 5) {
+      winning = true;
+      break;
+    }
+  }
+
+  // Check if we had any columns
+  for (let col = 0; col < 5; col++) {
+    if (vertical[col] == 5) {
+      winning = true;
+      break;
+    }
+  }
+
+  // Check diagonals
+  if (diagonals[0] == 5 || diagonals[1] == 5)
+  {
+    winning = true;
+  }
+
+  if (winning) {
+    won.value = false;
+    nextTick(() => {
+      won.value = true;
+      winningSound.value?.play();
+    })
+  }
 }
 </script>
 
@@ -113,6 +169,13 @@ function stampSquare(square: SquareInfo) {
     <audio ref="stampSound">
       <source src="@/assets/stamp.mp3" type="audio/mpeg">
     </audio>
+    <audio ref="winningSound">
+      <source src="@/assets/winner.mp3" type="audio/mpeg">
+    </audio>
+    <ConfettiExplosion v-if="won"
+                       class="confetti"
+                       :particleCount="200" :force="0.2" :duration="3500"
+                       :colors="['#b5737e', '#82a070', '#d14a3a', '#c4a56a', '#c28f54', '#89a0bb', '#a26a92']"/>
   </div>
 </template>
 
@@ -126,6 +189,7 @@ function stampSquare(square: SquareInfo) {
   background-color: #f76564;
   border-radius: 24px;
 
+  overflow: visible;
   display: grid;
   grid-template-rows: repeat(6, 1fr);
 
@@ -176,6 +240,15 @@ function stampSquare(square: SquareInfo) {
     margin: 0 12px 0 12px;
     text-align: center;
   }
+}
+
+.confetti {
+  position: absolute !important;
+  display: block;
+  left: 50%;
+  top: 10%;
+  width: 100vw;
+  height: 100vh;
 }
 
 /*@media (min-width: 1024px) {

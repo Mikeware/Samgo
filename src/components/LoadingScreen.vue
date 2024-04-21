@@ -4,22 +4,32 @@ import { ref, onMounted } from 'vue'
   msg: string
 }>()*/
 
+const bands = ref<HTMLDivElement>();
+
 const introAudio = ref<HTMLAudioElement>();
 
 onMounted(() => {
   introAudio.value?.play();
+
+  setTimeout(() => {
+    // Start color cycle
+    for (let i = 0; i < 5; i++)
+    {
+      bands.value?.children[i].classList.remove("paused");
+    }
+  }, 2500);
 });
 
 </script>
 
 <template>
   <div>
-    <div class="bands">
-      <div class="bar first"></div>
-      <div class="bar second"></div>
-      <div class="bar third"></div>
-      <div class="bar fourth"></div>
-      <div class="bar fifth"></div>
+    <div class="bands" ref="bands">
+      <div class="bar first paused"></div>
+      <div class="bar second paused"></div>
+      <div class="bar third paused"></div>
+      <div class="bar fourth paused"></div>
+      <div class="bar fifth paused"></div>
       <audio ref="introAudio">
         <source src="@/assets/gcintro.mp3" type="audio/mpeg">
       </audio>
@@ -30,7 +40,8 @@ onMounted(() => {
 
 <style scoped>
 div {
-  --out-time: 3.75s;
+  --cycle-time: 0.5s;
+  --out-time: 3.5s;
 }
 
 #gclogo {
@@ -47,7 +58,7 @@ div {
   animation-duration: 2.5s, 400ms;
   animation-fill-mode: forwards, forwards;
   animation-timing-function: ease-in-out, linear;
-  animation-delay: 1.25s, calc(var(--out-time) + 0.3s);
+  animation-delay: 1s, calc(var(--out-time) + 0.3s);
   transform-origin: left top;
 }
 
@@ -80,13 +91,19 @@ div {
   height: 100vh;
 }
 
+.paused {
+  animation-play-state: running, paused, running;
+}
+
 .bar {
   flex: 1;
 
-  animation-name: slideIn, slideOut;
-  animation-duration: 1.75s, 450ms;
-  animation-fill-mode: forwards, forwards;
-  animation-timing-function: ease-out, linear;
+  animation-name: slideIn, backgroundColorCycle, slideOut;
+  animation-duration: 1.5s, calc(var(--cycle-time)), 450ms;
+  animation-fill-mode: forwards, forwards, forwards;
+  animation-timing-function: ease-out, linear, linear;
+  animation-iteration-count: 1, infinite, 1;
+  animation-direction: normal, normal, normal;  
 
   transform: scaleX(0);
   transform-origin: right top;
@@ -122,26 +139,34 @@ div {
 
 .first {
   background-color: #b52327;
-  animation-delay: 650ms, calc(var(--out-time) + 550ms);
+  animation-delay: 650ms, calc(-1 * (4.99 * var(--cycle-time) / 5)), calc(var(--out-time) + 550ms);
 }
 
 .second {
   background-color: #ef6638;
-  animation-delay: 300ms, calc(var(--out-time) + 400ms);
+  animation-delay: 300ms, calc(-1 * (3.75 * var(--cycle-time) / 5)), calc(var(--out-time) + 400ms);
 }
 
 .third {
   background-color: #fdbe4f;
-  animation-delay: 350ms, calc(var(--out-time) + 650ms);
+  animation-delay: 350ms, calc(-1 * (2.5 * var(--cycle-time) / 5)), calc(var(--out-time) + 650ms);
 }
 
 .fourth {
   background-color: #2088a7;
-  animation-delay: 525ms, calc(var(--out-time) + 500ms);
+  animation-delay: 525ms, calc(-1 * (1.25 * var(--cycle-time) / 5)), calc(var(--out-time) + 500ms);
 }
 
 .fifth {
   background-color: #711931;
-  animation-delay: 500ms, calc(var(--out-time) + 600ms);
+  animation-delay: 500ms, calc(-1 * (0 * var(--cycle-time) / 5)), calc(var(--out-time) + 600ms);
+}
+
+@keyframes backgroundColorCycle {
+  0%   { background: #711931; }
+  25%  { background: #2088a7; }
+  50%  { background: #fdbe4f; }
+  75%  { background: #ef6638; }
+  100% { background: #b52327; }
 }
 </style>

@@ -2,9 +2,8 @@
 import { ref } from 'vue'
 import { SquareState, SquareInfo } from './models/states'
 import Square from './Square.vue'
-/*defineProps<{
-  msg: string
-}>()*/
+
+const stampSound = ref<HTMLAudioElement>();
 
 const phrases: string[] = [
   '"GAME SAMER"',
@@ -59,6 +58,11 @@ board.value[2][2] = new SquareInfo('"I\'VE BEEN HERE THE WHOLE TIME"', SquareSta
 
 function stampSquare(square: SquareInfo) {
   square.state = square.state == SquareState.STAMPED ? SquareState.UNSTAMPED : SquareState.STAMPED
+
+  if (square.state == SquareState.STAMPED)
+  {
+    stampSound.value?.play();
+  }
 }
 </script>
 
@@ -86,6 +90,9 @@ function stampSquare(square: SquareInfo) {
                 @click="stampSquare(square)"/>
       </div>
     </div>
+    <audio ref="stampSound">
+      <source src="@/assets/stamp.mp3" type="audio/mpeg">
+    </audio>
   </div>
 </template>
 

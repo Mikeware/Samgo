@@ -46,7 +46,7 @@ watch(
             isMiddleSquare && 'invert'
         ]">
     <div>
-      <span>{{ phrase }}</span>
+      <span v-html="phrase"></span>
     </div>
     <div ref="stamp" class="stamp" v-if="state == SquareState.STAMPED">
       <img src="@/assets/stamp.png" alt="Stamped" draggable="false">
@@ -73,8 +73,9 @@ div {
   background-repeat: no-repeat;
   background-position: center;
 
-  span {
-    max-width: 15ch;
+  > div > span {
+    display: inline-block;
+    max-width: 8ch;
     word-wrap: normal !important;
     word-break: keep-all !important;
   }
@@ -84,10 +85,10 @@ div {
   font-family: "Santana Black", Arial, Helvetica, sans-serif;
   font-size: 14px;
   white-space: normal;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  word-break: break-all;
-  hyphens: auto;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  word-break: break-word;
+  hyphens: manual;
 
   user-select: none;
 

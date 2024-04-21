@@ -158,4 +158,10 @@ div {
 .rot15 {
   transform: rotate(15deg);
 }
+
+@media only screen and (max-width: 600px) {
+  .square {
+    font-size: 10px;
+  }
+}
 </style>

@@ -159,9 +159,11 @@ div {
   transform: rotate(15deg);
 }
 
+/* For Mobile */
 @media only screen and (max-width: 600px) {
   .square {
     font-size: 10px;
+    padding: 0 2px;
   }
 }
 </style>

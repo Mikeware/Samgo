@@ -39,7 +39,7 @@ const phrases: string[] = [
 
   // Production
   'CALLS UPON STAGE&shy;HAND',
-  'BRINGS A RELATIVE',
+  'BRINGS A RELA&shy;TIVE',
   'GUEST WHO HAS PLAYED GC',
   'GETS A PHONE CALL',
   'COUNTS DOWN',

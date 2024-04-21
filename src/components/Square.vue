@@ -65,7 +65,7 @@ div {
 }
 
 .invert {
-  color: white;
+  color: white !important;
   font-size: 8px !important;  
 
   background-image: url('@/assets/star.png');
@@ -84,6 +84,7 @@ div {
 .square {
   font-family: "Santana Black", Arial, Helvetica, sans-serif;
   font-size: 14px;
+  color: #4d4d4d;
   white-space: normal;
   overflow-wrap: normal;
   word-wrap: normal;

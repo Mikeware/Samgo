@@ -1,6 +1,6 @@
 # Samgo
 
-A bingo card for Sam to use while watching any [Game Changer](https://www.dropout.tv/game-changer) episode. A layer deeper from S6E5's "Bingo" episode.
+[A bingo card for Sam](https://samgo.mikeware.com) to use while watching any [Game Changer](https://www.dropout.tv/game-changer) episode. A layer deeper from S6E5's "Bingo" episode.
 
 ## Disclaimer: This Fan Game is Not Associated with Dropout or Game Changer
 
@@ -16,6 +16,10 @@ The code itself is currently intentionally unlicensed (retained by me) and just 
 ## Project Info
 
 This was an educational endeavour to learn more about [Vue 3](https://vuejs.org/) and CSS animations. It was built from the base Vue.js template but using [Bun](https://bun.sh/).
+
+Hmmm, GitHub Pages workflow working, but assets not found... mystery for another day... Find [game here](https://samgo.mikeware.com).
+
+Tested on PC with Edge and Firefox, Android Chrome, iPhone Brave and Safari browsers.
 
 Original template instructions below.
 

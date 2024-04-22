@@ -17,54 +17,56 @@ const phrases: string[] = [
   '"GOOD NIGHT"',
   '"DROP&shy;OUT"',
   '"BRAVO"',
-  '"CON&shy;GRAT&shy;ULA&shy;TIONS"',
+  '"CON&shy;GRAT&shy;U&shy;LA&shy;TIONS"',
   '"OOH"',
   '"HMM"',
   '"WOW"',
   '"I LIKE IT/<wbr/>THAT"',
-  '"INTER&shy;ESTING"',
+  '"IN&shy;TER&shy;EST&shy;ING"',
 
   // Emotion
   'LAUGHS OUT LOUD',
   'KEELS OVER LAUGH&shy;ING',
   'GETS GIDDY',
+  'IN&shy;TRI&shy;GUED',
   'SHOCKED/<wbr/>SUR&shy;PRISED',
 
   // Stage
   'LEAVES PODIUM',
-  'LEAVES PLAYERS UN&shy;ATTEND&shy;ED',
+  'PLAYERS UN&shy;AT&shy;TEND&shy;ED',
   'TOUCHES HIS PODIUM',
   'GOES BACK&shy;STAGE',
   'TURNS AROUND',
 
   // Production
-  'CALLS UPON STAGE&shy;HAND',
-  'BRINGS A RELA&shy;TIVE',
-  'GUEST WHO HAS PLAYED GC',
-  'GETS A PHONE CALL',
+  'CALLS STAGE&shy;HAND',
+  'BRINGS REL&shy;A&shy;TIVE',
+  'PRIOR PLAYER AS GUEST',
+  'USES PHONE',
   'COUNTS DOWN',
 
   // Game
-  'INTRO&shy;DUCES TWIST',
-  'INTRO&shy;DUCES A 2ND TWIST',
-  'PARO&shy;DIES A GAME SHOW',
+  'IN&shy;TRO&shy;DUCES TWIST',
+  'IN&shy;TRO&shy;DUCES A 2ND TWIST',
+  'PAR&shy;O&shy;DIES A GAME SHOW',
   'HAS PLAYERS WAGER',
   'HAS A MINI&shy;GAME',
 
   // Points
   'RE&shy;MOVES A POINT',
   'AWARDS MORE THAN 1 POINT',
-  'AWARDS POINT ASKED FOR',
-  'AWARDS BONUS POINT',  
-  'MUL&shy;TIPLE PEOPLE GET POINTS',
+  'NE&shy;GO&shy;TI&shy;AT&shy;ED POINT',
+  'AWARDS BONUS POINT',
+  'MUL&shy;TI&shy;PLE PEOPLE GET POINTS',
   'AWARDS A NON-POINT PRIZE',
 
   // Player Interaction
   'LEARNS SOME&shy;THING NEW',
-  'GETS THREAT&shy;ENED BY A PLAYER',    
+  'THREAT&shy;ENED BY PLAYER',
+  'TOUCH&shy;ED BY A PLAYER',
   'SHARES ANEC&shy;DOTE ABOUT PLAYER',
-  'SHARES A PER&shy;SONAL ANEC&shy;DOTE',
-  'UPSETS/<wbr/>FRUST&shy;RATES PLAYER',
+  'SHARES PER&shy;SON&shy;AL ANEC&shy;DOTE',
+  'UP&shy;SETS/<wbr/>FRUST&shy;RATES PLAYER',
 ]
 
 function getRandomElementFromArray(array: string[]): string {

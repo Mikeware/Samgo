@@ -1,0 +1,77 @@
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { SquareState, SquareInfo } from './models/states'
+const props = defineProps<{
+  board: SquareInfo[][]
+}>()
+
+const shareCode = ref()
+
+onMounted(() => {
+  shareCode.value = window.location.origin + '?board='
+
+  // Generate board code by adding 2-digit HEX value to represent each phrase index
+  for (let i = 0; i < 25; i++) {
+    shareCode.value += props.board[Math.floor(i / 5)][i % 5].index
+      .toString(16)
+      .padStart(2, '0')
+      .toUpperCase()
+  }
+
+  shareCode.value += '&stamps='
+
+  // Generate stamp encoding from board state with each stamp being a single bit of a 7-digit HEX value
+  let stampBits = 0
+  for (let i = 0; i < 25; i++) {
+    if (props.board[Math.floor(i / 5)][i % 5].state === SquareState.STAMPED) {
+      stampBits |= 1 << i
+    }
+  }
+  shareCode.value += stampBits.toString(16).padStart(7, '0').toUpperCase()
+})
+
+function copyCodeToClipboard() {
+  navigator.clipboard.writeText(shareCode.value)
+}
+</script>
+
+<template>
+  <div class="share-dialog">
+    <h3>Congratulations!</h3>
+    <p>Share this link with friends to show off your winning board!</p>
+    <input type="text" :value="shareCode" readonly />
+    <button @click="copyCodeToClipboard()" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24">
+        <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+        <path
+          d="M192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-200.6c0-17.4-7.1-34.1-19.7-46.2L370.6 17.8C358.7 6.4 342.8 0 326.3 0L192 0zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-16-64 0 0 16-192 0 0-256 16 0 0-64-16 0z"
+        />
+      </svg>
+    </button>
+    <button @click="$emit('close')">Close</button>
+  </div>
+</template>
+
+<style scoped>
+.share-dialog {
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+
+  border-radius: 0 1.5em 1.5em 0;
+  background: white;
+  padding: 1.5em;
+  position: relative;
+  margin: 1em 0;
+  /* Create stepped border using box-shadow */
+  box-shadow:
+    0 0 0 6px #711931,
+    0 0 0 12px #2088a7,
+    0 0 0 18px #ef6638,
+    0 0 0 24px #fdbe4f,
+    0 0 0 30px #b52327;
+}
+</style>

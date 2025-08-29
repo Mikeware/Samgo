@@ -70,8 +70,9 @@ div {
   background-position: center;
 
   > div > span {
+    padding-top: 1em;
     display: inline-block;
-    max-width: 8ch;
+    max-width: 11ch;
     word-wrap: normal !important;
     word-break: keep-all !important;
   }

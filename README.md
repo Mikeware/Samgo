@@ -27,8 +27,8 @@ Tested on PC with Edge and Firefox, Android Chrome, iPhone Brave and Safari brow
 
 ## History
 
-- August 29, 2025 - Add Sharable Completed Board State Link
-- August 28, 2025 - **V2** - Update: Sam's card color, new squares
+- August 29, 2025 - **V2** - Add Sharable Completed Board State Link, head wiggling, and Published!
+- August 28, 2025 - Start V2 Update: Sam's card color, new squares
 - August 25, 2025 - [S7E11's "Samalamadingdong" episode](https://www.dropout.tv/game-changer/season:7/videos/samalamadingdong) Airs
 - April 22, 2024 - **V1** - Published in time for next episode!
 - April 21, 2024 - Finishing touches and build work for shipping, test against Bingo episode itself

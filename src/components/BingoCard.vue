@@ -177,6 +177,9 @@ function generateBoard(encodedBoard: string | null, encodedStamps: string | null
 }
 
 function stampSquare(square: SquareInfo) {
+  // Stop stamping when won
+  if (won.value) return
+
   square.state = square.state == SquareState.STAMPED ? SquareState.UNSTAMPED : SquareState.STAMPED
 
   if (square.state == SquareState.STAMPED) {

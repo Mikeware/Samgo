@@ -9,6 +9,11 @@ const won = ref(false)
 const stampSound = ref<HTMLAudioElement>()
 const winningSound = ref<HTMLAudioElement>()
 
+// &shy; used to indicate within-word breaks for tiny screens (basically 5-6 letters per line is when breaks need to happen)
+// <wbr/> used to indicate bigger line break parts (usually in conjunction w/ '/')
+// &apos; for single-quote within quoted phrase
+// Commented ## after some lines is square on in-universe Samgo card from S7E11 Samalamadingdong
+// Counting from top-left across, then down restarting at left each line. 1-25
 const phrases: string[] = [
   // Phrases
   '"GAME SAMER"',
@@ -23,23 +28,42 @@ const phrases: string[] = [
   '"WOW"',
   '"I LIKE IT/<wbr/>THAT"',
   '"IN&shy;TER&shy;EST&shy;ING"',
+  '"IN ORDER<wbr/> SO THAT"', // #4
+  '"I CAN&apos;T BE&shy;LIEVE THIS"', //10
+  '"TRUE"', // #17
+  'USES SIM&shy;ILE OR META&shy;PHOR', // #18
+  '"LET&apos;S ZOOM OUT"/<wbr/>"LET&apos;S THINK ABOUT THIS"', // #19
+  '"HO. LY. SHIT."', // #20
+  '"MUR&shy;DER&shy;ERS&apos; ROW"', // #22
 
   // Emotion
   'LAUGHS OUT LOUD',
   'KEELS OVER LAUGH&shy;ING',
   'GETS GIDDY',
   'IN&shy;TRI&shy;GUED',
-  'SHOCKED/<wbr/>SUR&shy;PRISED',
+  'SHOCK&shy;ED/<wbr/>SUR&shy;PRISED',
+  'PULLS/<wbr/>SCRAT&shy;CHES BEARD', // #1
+  'IS SPE&shy;ECH&shy;LESS', // #2
+  'HUGS SOME&shy;ONE', // #3
+  'HIGH FIVES SOME&shy;ONE', // #6
+  'SAYS SOME&shy;THING SELF-DE&shy;PRE&shy;CAT&shy;ING', // #23
+  'SCREAMS/<wbr/>YELLS', // #25
 
-  // Stage
+  // Stage/Action
   'LEAVES PODIUM',
   'PLAYERS UN&shy;AT&shy;TEND&shy;ED',
   'TOUCHES HIS PODIUM',
   'GOES BACK&shy;STAGE',
   'TURNS AROUND',
+  'DRINKS SOME&shy;THING', // #7 Removed YELLOW to Generalize
+  'RUBS EYES OR TEMP&shy;LES', // #8
+  'FANS SELF/<wbr/>AD&shy;JUSTS COLLAR', // #12
+  'POINTS AND LAUGHS AT THE SAME TIME', // #14
+  'CLEARS THROAT', // #16
+  'DOES THE LOOK&shy;ING-AT-HANDS THING', // #21
 
   // Production
-  'CALLS STAGE&shy;HAND',
+  'CALLS STAGE&shy;HAND', // #5 Generalized (TRIES TO GET INFORMATION OUT OF CREW MEMBER)
   'BRINGS REL&shy;A&shy;TIVE',
   'PRIOR PLAYER AS GUEST',
   'USES PHONE',
@@ -51,6 +75,7 @@ const phrases: string[] = [
   'PAR&shy;O&shy;DIES A GAME SHOW',
   'HAS PLAYERS WAGER',
   'HAS A MINI&shy;GAME',
+  'REF&shy;ER&shy;ENCE TO PRE&shy;VIOUS GG EPI&shy;SODE', // #9 Generalized -IDENTIFIES
 
   // Points
   'RE&shy;MOVES A POINT',
@@ -67,6 +92,7 @@ const phrases: string[] = [
   'SHARES ANEC&shy;DOTE ABOUT PLAYER',
   'SHARES PER&shy;SON&shy;AL ANEC&shy;DOTE',
   'UP&shy;SETS/<wbr/>FRUST&shy;RATES PLAYER',
+  'BREAKS FOURTH WALL' // #24
 ]
 
 function getRandomElementFromArray(array: string[]): string {
@@ -84,6 +110,14 @@ const board = ref(
 )
 
 board.value[2][2] = new SquareInfo('"I\'VE BEEN HERE THE WHOLE TIME"', SquareState.UNSTAMPED)
+
+// Square #13 - SAMALAMADINGDONG RANDOM CHANCE 5%
+if (Math.random() < 0.05) {
+  board.value[2][2] = new SquareInfo(
+    'SMACKS BUTT WITH BOTH HANDS AND SAYS "MEOW"',
+    SquareState.UNSTAMPED
+  )
+}
 
 function stampSquare(square: SquareInfo) {
   square.state = square.state == SquareState.STAMPED ? SquareState.UNSTAMPED : SquareState.STAMPED
@@ -201,7 +235,7 @@ function stampSquare(square: SquareInfo) {
 }
 
 .card {
-  background-color: #711931;
+  background-color: #f0af21;
   border-radius: 24px;
 
   overflow: visible;

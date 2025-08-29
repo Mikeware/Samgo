@@ -75,6 +75,7 @@ function copyCodeToClipboard() {
   width: 80%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  color: black !important;
 
   border-radius: 0 1.5em 1.5em 0;
   background: white;

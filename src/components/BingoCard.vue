@@ -9,6 +9,23 @@ const won = ref(false)
 const stampSound = ref<HTMLAudioElement>()
 const winningSound = ref<HTMLAudioElement>()
 
+// Seed for board generation
+function getSeed() {
+  // Try to get from query string
+  const params = new URLSearchParams(window.location.search)
+  const boardParam = params.get('board')
+  return boardParam ? parseInt(boardParam) : Math.floor(Math.random() * 1e9)
+}
+
+let seed = getSeed()
+const boardSeed = ref(seed)
+
+// Helper for seeded random
+function random() {
+  let x = Math.tan(seed++) * 10000
+  return x - Math.floor(x)
+}
+
 // &shy; used to indicate within-word breaks for tiny screens (basically 5-6 letters per line is when breaks need to happen)
 // <wbr/> used to indicate bigger line break parts (usually in conjunction w/ '/')
 // &apos; for single-quote within quoted phrase
@@ -96,7 +113,7 @@ const phrases: string[] = [
 ]
 
 function getRandomElementFromArray(array: string[]): string {
-  const randomIndex = Math.floor(Math.random() * array.length)
+  const randomIndex = Math.floor(random() * array.length)
   return array.splice(randomIndex, 1)[0]
 }
 
@@ -112,7 +129,7 @@ const board = ref(
 board.value[2][2] = new SquareInfo('"I\'VE BEEN HERE THE WHOLE TIME"', SquareState.UNSTAMPED)
 
 // Square #13 - SAMALAMADINGDONG RANDOM CHANCE 5%
-if (Math.random() < 0.05) {
+if (random() < 0.05) {
   board.value[2][2] = new SquareInfo(
     'SMACKS BUTT WITH BOTH HANDS AND SAYS "MEOW"',
     SquareState.UNSTAMPED

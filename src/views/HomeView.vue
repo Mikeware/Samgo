@@ -4,8 +4,16 @@ import LoadingScreen from '@/components/LoadingScreen.vue'
 import { ref } from 'vue'
 
 const loadState = ref('starting')
+const params = new URLSearchParams(window.location.search)
+const hasBoard = ref(params.has('board'))
 
 function startGame() {
+  // Jump to game directly if loading a board from a shared seed
+  if (hasBoard.value) {
+    loadState.value = 'game'
+    return
+  }
+
   loadState.value = 'intro'
 
   setTimeout(() => {
@@ -21,8 +29,14 @@ function startGame() {
 <template>
   <main>
     <div class="center" v-if="loadState == 'starting'">
+      <p v-if="hasBoard">Shared Link! Loaded Board #{{ params.get('board') }}</p>
       <button @click="startGame" type="button">
-        <img src="@/assets/PlayGamePodium.png" alt="Play Game" draggable="false" />
+        <img
+          src="@/assets/PlayGamePodium.png"
+          :alt="hasBoard ? 'Load Board' : 'Play Game'"
+          :title="hasBoard ? 'Load Board' : 'Play Game'"
+          draggable="false"
+        />
       </button>
       <span>
         <h3>Disclaimer: This Fan Game is Not Associated with Dropout or Game Changer</h3>

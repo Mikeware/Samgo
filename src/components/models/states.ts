@@ -7,6 +7,7 @@ export class SquareInfo {
   constructor(
     public readonly phrase: string,
     public readonly index: number,
-    public state: SquareState
+    public state: SquareState,
+    public wiggle: boolean = false
   ) {}
 }

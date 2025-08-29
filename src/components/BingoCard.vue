@@ -193,9 +193,11 @@ function stampSquare(square: SquareInfo) {
   }
 
   // check for bingos
-  let winning = false
   let vertical = Array.from({ length: 5 }, () => 0)
   let diagonals = Array.from({ length: 2 }, () => 0)
+  let winType: 'row' | 'col' | 'diag1' | 'diag2' | null = null
+  let winIndex = -1
+
   for (let row = 0; row < 5; row++) {
     let horizontal = 0
 
@@ -217,25 +219,53 @@ function stampSquare(square: SquareInfo) {
 
     // Did this row have a bingo?
     if (horizontal == 5) {
-      winning = true
+      winType = 'row'
+      winIndex = row
       break
     }
   }
 
   // Check if we had any columns
-  for (let col = 0; col < 5; col++) {
-    if (vertical[col] == 5) {
-      winning = true
-      break
+  if (!winType) {
+    for (let col = 0; col < 5; col++) {
+      if (vertical[col] == 5) {
+        winType = 'col'
+        winIndex = col
+        break
+      }
     }
   }
 
   // Check diagonals
-  if (diagonals[0] == 5 || diagonals[1] == 5) {
-    winning = true
+  if (!winType && diagonals[0] == 5) {
+    winType = 'diag1'
   }
 
-  if (winning) {
+  if (!winType && diagonals[1] == 5) {
+    winType = 'diag2'
+  }
+
+  if (winType) {
+    // Set wiggle on winning squares
+    if (winType === 'row') {
+      for (let col = 0; col < 5; col++) {
+        board.value[winIndex][col].wiggle = true
+      }
+    } else if (winType === 'col') {
+      for (let row = 0; row < 5; row++) {
+        board.value[row][winIndex].wiggle = true
+      }
+    } else if (winType === 'diag1') {
+      for (let i = 0; i < 5; i++) {
+        board.value[i][i].wiggle = true
+      }
+    } else if (winType === 'diag2') {
+      for (let i = 0; i < 5; i++) {
+        board.value[i][4 - i].wiggle = true
+      }
+    }
+
+    // Trigger confetti, play sound, and show share dialog
     won.value = false
     nextTick(() => {
       won.value = true
@@ -278,6 +308,7 @@ function stampSquare(square: SquareInfo) {
             :is-last-row="rowindex == 4"
             :is-last-col="index == 4"
             :is-middle-square="rowindex == 2 && index == 2"
+            :wiggle="square.wiggle"
             @click="stampSquare(square)"
           />
         </div>

@@ -7,6 +7,7 @@ const props = defineProps<{
   isLastRow: boolean
   isLastCol: boolean
   isMiddleSquare: boolean
+  wiggle?: boolean
 }>()
 
 const stamp = ref<HTMLDivElement>()
@@ -14,6 +15,8 @@ const stamp = ref<HTMLDivElement>()
 function randomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+const offset = ref(randomInt(1, 5))
 
 watch(
   () => props.state,
@@ -42,7 +45,12 @@ watch(
     <div>
       <span v-html="phrase"></span>
     </div>
-    <div ref="stamp" class="stamp" v-if="state == SquareState.STAMPED">
+    <div
+      ref="stamp"
+      :class="['stamp', wiggle && 'wiggle']"
+      v-if="state == SquareState.STAMPED"
+      :style="wiggle && offset !== undefined ? { animationDelay: `${0.2 * offset}s` } : {}"
+    >
       <img src="@/assets/stamp.png" alt="Stamped" draggable="false" />
     </div>
   </div>
@@ -162,5 +170,28 @@ div {
     font-size: 10px;
     padding: 0 2px;
   }
+}
+
+/* winning animation */
+@keyframes wiggle {
+  0% {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.wiggle {
+  animation: wiggle 2.5s linear infinite;
 }
 </style>

@@ -141,6 +141,9 @@ function generateBoard(encodedBoard: string | null, encodedStamps: string | null
         )
       }
     }
+
+    // If we're loading an encoded board then mark that we've already won so we can't stamp.
+    won.value = true
   } else {
     // Need a copy so we don't grab the same phrase, but also need to index back into the original array
     let copyPhrases = [...phrases]

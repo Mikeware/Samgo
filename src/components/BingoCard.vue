@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { SquareState, SquareInfo } from './models/states'
-import Square from './Square.vue'
+import CardSquare from './CardSquare.vue'
 
 import ConfettiExplosion from 'vue-confetti-explosion'
 
@@ -189,9 +189,10 @@ function stampSquare(square: SquareInfo) {
       <div><span>O</span></div>
     </div>
     <!-- Bingo Tile -->
-    <div v-for="(row, rowindex) in board" class="row">
+    <div v-for="(row, rowindex) in board" class="row" :key="rowindex">
       <div
         v-for="(square, index) in row"
+        :key="index"
         :class="[
           index == 0 && rowindex == 0 && 'topleft',
           index == 4 && rowindex == 0 && 'topright',
@@ -199,7 +200,7 @@ function stampSquare(square: SquareInfo) {
           index == 4 && rowindex == 4 && 'bottomright'
         ]"
       >
-        <Square
+        <CardSquare
           :phrase="square.phrase"
           :state="square.state"
           :is-last-row="rowindex == 4"

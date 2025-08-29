@@ -3,11 +3,11 @@ import { ref, nextTick } from 'vue'
 import { SquareState, SquareInfo } from './models/states'
 import Square from './Square.vue'
 
-import ConfettiExplosion from "vue-confetti-explosion";
+import ConfettiExplosion from 'vue-confetti-explosion'
 
-const won = ref(false);
-const stampSound = ref<HTMLAudioElement>();
-const winningSound = ref<HTMLAudioElement>();
+const won = ref(false)
+const stampSound = ref<HTMLAudioElement>()
+const winningSound = ref<HTMLAudioElement>()
 
 const phrases: string[] = [
   // Phrases
@@ -70,13 +70,16 @@ const phrases: string[] = [
 ]
 
 function getRandomElementFromArray(array: string[]): string {
-    const randomIndex = Math.floor(Math.random() * array.length);
-    return array.splice(randomIndex, 1)[0];
+  const randomIndex = Math.floor(Math.random() * array.length)
+  return array.splice(randomIndex, 1)[0]
 }
 
 const board = ref(
-  Array.from({ length: 5 }, () => 
-    Array.from({ length: 5 }, () => new SquareInfo(getRandomElementFromArray(phrases), SquareState.UNSTAMPED))
+  Array.from({ length: 5 }, () =>
+    Array.from(
+      { length: 5 },
+      () => new SquareInfo(getRandomElementFromArray(phrases), SquareState.UNSTAMPED)
+    )
   )
 )
 
@@ -85,60 +88,58 @@ board.value[2][2] = new SquareInfo('"I\'VE BEEN HERE THE WHOLE TIME"', SquareSta
 function stampSquare(square: SquareInfo) {
   square.state = square.state == SquareState.STAMPED ? SquareState.UNSTAMPED : SquareState.STAMPED
 
-  if (square.state == SquareState.STAMPED)
-  {
-    stampSound.value?.play();
+  if (square.state == SquareState.STAMPED) {
+    stampSound.value?.play()
   }
 
   // check for bingos
-  let winning = false;
-  let vertical = Array.from({ length: 5}, () => 0);
-  let diagonals = Array.from({ length: 2}, () => 0);
+  let winning = false
+  let vertical = Array.from({ length: 5 }, () => 0)
+  let diagonals = Array.from({ length: 2 }, () => 0)
   for (let row = 0; row < 5; row++) {
-    let horizontal = 0;
+    let horizontal = 0
 
     for (let col = 0; col < 5; col++) {
       if (board.value[row][col].state == SquareState.STAMPED) {
-        vertical[col]++;
-        horizontal++;
+        vertical[col]++
+        horizontal++
 
         // TL -> BR
         if (row == col) {
-          diagonals[0]++;
+          diagonals[0]++
         }
         // TR -> BL
         if (4 - row == col) {
-          diagonals[1]++;
+          diagonals[1]++
         }
       }
     }
 
     // Did this row have a bingo?
     if (horizontal == 5) {
-      winning = true;
-      break;
+      winning = true
+      break
     }
   }
 
   // Check if we had any columns
   for (let col = 0; col < 5; col++) {
     if (vertical[col] == 5) {
-      winning = true;
-      break;
+      winning = true
+      break
     }
   }
 
   // Check diagonals
-  if (diagonals[0] == 5 || diagonals[1] == 5)
-  {
-    winning = true;
+  if (diagonals[0] == 5 || diagonals[1] == 5) {
+    winning = true
   }
 
   if (winning) {
-    won.value = false;
+    won.value = false
     nextTick(() => {
-      won.value = true;
-      winningSound.value?.play();
+      won.value = true
+      winningSound.value?.play()
     })
   }
 }
@@ -147,44 +148,56 @@ function stampSquare(square: SquareInfo) {
 <template>
   <div class="card">
     <div class="letters row">
-        <div><span>S</span></div>
-        <div><span>A</span></div>
-        <div><span>M</span></div>
-        <div><span>G</span></div>
-        <div><span>O</span></div>
+      <div><span>S</span></div>
+      <div><span>A</span></div>
+      <div><span>M</span></div>
+      <div><span>G</span></div>
+      <div><span>O</span></div>
     </div>
     <!-- Bingo Tile -->
     <div v-for="(row, rowindex) in board" class="row">
-      <div v-for="(square, index) in row"
-           :class="[
-              index == 0 && rowindex == 0 && 'topleft',
-              index == 4 && rowindex == 0 && 'topright',
-              index == 0 && rowindex == 4 && 'bottomleft',
-              index == 4 && rowindex == 4 && 'bottomright',
-           ]">
-        <Square :phrase="square.phrase" :state="square.state" 
-                :is-last-row="rowindex == 4" :is-last-col="index == 4"
-                :is-middle-square="rowindex == 2 && index == 2"
-                @click="stampSquare(square)"/>
+      <div
+        v-for="(square, index) in row"
+        :class="[
+          index == 0 && rowindex == 0 && 'topleft',
+          index == 4 && rowindex == 0 && 'topright',
+          index == 0 && rowindex == 4 && 'bottomleft',
+          index == 4 && rowindex == 4 && 'bottomright'
+        ]"
+      >
+        <Square
+          :phrase="square.phrase"
+          :state="square.state"
+          :is-last-row="rowindex == 4"
+          :is-last-col="index == 4"
+          :is-middle-square="rowindex == 2 && index == 2"
+          @click="stampSquare(square)"
+        />
       </div>
     </div>
     <audio ref="stampSound">
-      <source src="@/assets/stamp.mp3" type="audio/mpeg">
+      <source src="@/assets/stamp.mp3" type="audio/mpeg" />
     </audio>
     <audio ref="winningSound">
-      <source src="@/assets/winner.mp3" type="audio/mpeg">
+      <source src="@/assets/winner.mp3" type="audio/mpeg" />
     </audio>
-    <ConfettiExplosion v-if="won"
-                       class="confetti"
-                       :particleCount="200" :force="0.2" :duration="3500"
-                       :colors="['#b5737e', '#82a070', '#d14a3a', '#c4a56a', '#c28f54', '#89a0bb', '#a26a92']"/>
+    <ConfettiExplosion
+      v-if="won"
+      class="confetti"
+      :particleCount="200"
+      :force="0.2"
+      :duration="3500"
+      :colors="['#b5737e', '#82a070', '#d14a3a', '#c4a56a', '#c28f54', '#89a0bb', '#a26a92']"
+    />
   </div>
 </template>
 
 <style scoped>
 @font-face {
-  font-family: "Keep on Truckin";
-  src: local("Keep on Truckin"), url(@/assets/fonts/keept___.ttf) format("truetype");
+  font-family: 'Keep on Truckin';
+  src:
+    local('Keep on Truckin'),
+    url(@/assets/fonts/keept___.ttf) format('truetype');
 }
 
 .card {
@@ -231,7 +244,7 @@ function stampSquare(square: SquareInfo) {
 }
 
 .letters {
-  font-family: "Keep on Truckin", 'Times New Roman', Times, serif;
+  font-family: 'Keep on Truckin', 'Times New Roman', Times, serif;
   font-weight: bold;
   font-size: 64px;
 

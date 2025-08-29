@@ -15,7 +15,6 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-
 nav {
   width: 100%;
   font-size: 12px;

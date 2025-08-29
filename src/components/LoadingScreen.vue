@@ -4,22 +4,20 @@ import { ref, onMounted } from 'vue'
   msg: string
 }>()*/
 
-const bands = ref<HTMLDivElement>();
+const bands = ref<HTMLDivElement>()
 
-const introAudio = ref<HTMLAudioElement>();
+const introAudio = ref<HTMLAudioElement>()
 
 onMounted(() => {
-  introAudio.value?.play();
+  introAudio.value?.play()
 
   setTimeout(() => {
     // Start color cycle
-    for (let i = 0; i < 5; i++)
-    {
-      bands.value?.children[i].classList.remove("paused");
+    for (let i = 0; i < 5; i++) {
+      bands.value?.children[i].classList.remove('paused')
     }
-  }, 2500);
-});
-
+  }, 2500)
+})
 </script>
 
 <template>
@@ -31,10 +29,10 @@ onMounted(() => {
       <div class="bar fourth paused"></div>
       <div class="bar fifth paused"></div>
       <audio ref="introAudio">
-        <source src="@/assets/gcintro.mp3" type="audio/mpeg">
+        <source src="@/assets/gcintro.mp3" type="audio/mpeg" />
       </audio>
     </div>
-    <img id="gclogo" src="@/assets/gclogo.png" draggable="false"></img>
+    <img id="gclogo" src="@/assets/gclogo.png" draggable="false" />
   </div>
 </template>
 
@@ -53,7 +51,7 @@ div {
   top: -10%;
 
   transform: scale(0.1) translate(-50%, 0%);
-  
+
   animation-name: logoFlyIn, logoFlyOut;
   animation-duration: 2.5s, 400ms;
   animation-fill-mode: forwards, forwards;
@@ -76,11 +74,11 @@ div {
 @keyframes logoFlyOut {
   0% {
     top: 50%;
-    left: 50%
+    left: 50%;
   }
   100% {
     top: 50%;
-    left: -50%
+    left: -50%;
   }
 }
 
@@ -103,14 +101,15 @@ div {
   animation-fill-mode: forwards, forwards, forwards;
   animation-timing-function: ease-out, linear, linear;
   animation-iteration-count: 1, infinite, 1;
-  animation-direction: normal, normal, normal;  
+  animation-direction: normal, normal, normal;
 
   transform: scaleX(0);
   transform-origin: right top;
   justify-content: flex-end;
 }
 
-.bar.second, .bar.fourth {
+.bar.second,
+.bar.fourth {
   transform-origin: left top;
   justify-content: flex-start;
 }
@@ -163,10 +162,20 @@ div {
 }
 
 @keyframes backgroundColorCycle {
-  0%   { background: #711931; }
-  25%  { background: #2088a7; }
-  50%  { background: #fdbe4f; }
-  75%  { background: #ef6638; }
-  100% { background: #b52327; }
+  0% {
+    background: #711931;
+  }
+  25% {
+    background: #2088a7;
+  }
+  50% {
+    background: #fdbe4f;
+  }
+  75% {
+    background: #ef6638;
+  }
+  100% {
+    background: #b52327;
+  }
 }
 </style>

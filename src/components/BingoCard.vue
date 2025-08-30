@@ -272,16 +272,18 @@ function stampSquare(square: SquareInfo) {
       winningSound.value?.play()
       setTimeout(() => {
         showShareDialog.value = true
-      }, 2000)
+      }, 2150)
     })
   }
 }
 </script>
 
 <template>
-  <div class="bingo-page">
+  <div class="bingo-page" id="boardcapture">
     <!-- Backdrop & Share Dialog -->
-    <div v-if="showShareDialog" class="backdrop" @click="showShareDialog = false"></div>
+    <Transition name="fade">
+      <div v-if="showShareDialog" class="backdrop" @click="showShareDialog = false"></div>
+    </Transition>
     <div class="bingo-card">
       <div class="letters row">
         <div><span>S</span></div>
@@ -420,6 +422,16 @@ function stampSquare(square: SquareInfo) {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.75s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /*@media (min-width: 1024px) {

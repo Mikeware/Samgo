@@ -13,6 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "vue": "^3.4.21",
     "vue-confetti-explosion": "^1.0.2",
     "vue-router": "^4.3.0"

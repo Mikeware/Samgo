@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { SquareState, SquareInfo } from './models/states'
+import html2canvas from 'html2canvas'
 const props = defineProps<{
   board: SquareInfo[][]
 }>()
 
-const shareCode = ref()
+let imgDataUrl: string
+
+// Capture snapshot of board before displaying dialog
+html2canvas(document.querySelector('#boardcapture')!).then((canvas) => {
+  imgDataUrl = canvas.toDataURL('image/png')
+})
+
+const shareCode = ref<string>()
 
 onMounted(() => {
   shareCode.value = window.location.origin + '/?board='
@@ -31,7 +39,24 @@ onMounted(() => {
 })
 
 function copyCodeToClipboard() {
-  navigator.clipboard.writeText(shareCode.value)
+  navigator.clipboard.writeText(shareCode.value ?? window.location.origin)
+}
+
+async function shareImage() {
+  const blob = await (await fetch(imgDataUrl)).blob()
+  const filesArray = [
+    new File([blob], 'samgo.png', {
+      type: blob.type,
+      lastModified: Date.now()
+    })
+  ]
+  const shareData = {
+    title: 'Samgo',
+    text: 'Check out my winning #Samgo board!',
+    url: shareCode.value,
+    files: filesArray
+  }
+  navigator.share(shareData)
 }
 </script>
 
@@ -46,7 +71,20 @@ function copyCodeToClipboard() {
         />
       </svg>
     </button>
-    <p>Share this link with friends to show off your winning board!</p>
+    <div class="share-link-row">
+      <p>
+        Share this link with friends to show off your winning board! Or click the share button to
+        share an image of your board.
+      </p>
+      <button @click="shareImage()" class="flat-button" type="button">
+        <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
+          <path
+            d="M384 192c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 5.4 .5 10.8 1.3 16L159.6 184.1c-16.9-15-39.2-24.1-63.6-24.1-53 0-96 43-96 96s43 96 96 96c24.4 0 46.6-9.1 63.6-24.1L289.3 400c-.9 5.2-1.3 10.5-1.3 16 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-24.4 0-46.6 9.1-63.6 24.1L190.7 272c.9-5.2 1.3-10.5 1.3-16s-.5-10.8-1.3-16l129.7-72.1c16.9 15 39.2 24.1 63.6 24.1z"
+          />
+        </svg>
+      </button>
+    </div>
     <div class="share-link-row">
       <input
         type="text"

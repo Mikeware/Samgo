@@ -6,6 +6,8 @@ const props = defineProps<{
   board: SquareInfo[][]
 }>()
 
+const isSecure = ref(window.isSecureContext)
+
 let imgDataUrl: string
 
 // Capture snapshot of board before displaying dialog
@@ -56,7 +58,7 @@ async function shareImage() {
     url: shareCode.value,
     files: filesArray
   }
-  navigator.share(shareData)
+  await navigator.share(shareData)
 }
 </script>
 
@@ -76,7 +78,7 @@ async function shareImage() {
         Share this link with friends to show off your winning board! Or click the share button to
         share an image of your board.
       </p>
-      <button @click="shareImage()" class="flat-button" type="button">
+      <button @click="shareImage()" class="flat-button" type="button" v-if="isSecure">
         <!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16">
           <path

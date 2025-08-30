@@ -272,7 +272,7 @@ function stampSquare(square: SquareInfo) {
       winningSound.value?.play()
       setTimeout(() => {
         showShareDialog.value = true
-      }, 2150)
+      }, 2250)
     })
   }
 }

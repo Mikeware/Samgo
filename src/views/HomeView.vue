@@ -53,6 +53,7 @@ function startGame() {
           <a href="https://x.com/MikewareXGR">Mikeware</a>.
           <a href="https://github.com/Mikeware/Samgo">More info here</a>.
         </p>
+        <p>V2.1</p>
       </span>
     </div>
 
